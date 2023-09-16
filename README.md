@@ -1,1 +1,1 @@
-# azure-bicep
+# Azure Bicep
