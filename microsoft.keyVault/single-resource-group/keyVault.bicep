@@ -1,4 +1,3 @@
-//TEST
 @description('Key Vault에 적용할 태그')
 param tags object = {}
 
