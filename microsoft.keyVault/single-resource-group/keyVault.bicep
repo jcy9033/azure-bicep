@@ -13,8 +13,8 @@ param securityGroupId string = 'cfa4eb1d-5a01-445a-84ad-1f198ebab44c'
 param location string = resourceGroup().location
 
 @description('Key Vault의 이름')
-param deploymentTime string
-var keyVaultName = 'kv-${uniqueString(deploymentTime)}'
+param utcValue string = utcNow()
+var keyVaultName = 'kv-${utcValue}'
 
 @description('Private DNS Zone의 이름')
 var privateDnsZoneName = 'privatelink.vaultcore.azure.net'
