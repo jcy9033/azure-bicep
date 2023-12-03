@@ -1,0 +1,2 @@
+#. Create a Azure Key Vault only
+az deployment group create --resource-group chanpu-dev --template-file .\keyVault.bicep --parameters .\keyVault.bicepparam

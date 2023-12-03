@@ -1,3 +1,5 @@
+// Parameters
+
 @description('리소스를 배포할 Azure 지역')
 param location string = resourceGroup().location
 
@@ -18,6 +20,8 @@ param virtualNetworkId string
 
 @description('Key Vault 접근 정책을 할당할 그룹ID')
 param securityGroupId string
+
+/*------------------------------------------------------------------------------------------------------------*/
 
 var privateDnsZoneName = 'privatelink${environment().suffixes.keyvaultDns}'
 

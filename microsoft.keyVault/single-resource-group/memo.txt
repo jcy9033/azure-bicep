@@ -1,0 +1,21 @@
+Private dns zone, Private endpoint 는 각각 다른 리소스 그룹에 배포해야 한다.
+1. Private dns zone 
+-다른 구독
+-같은 리소스 그룹
+
+2. Private endpoint
+-같은 구독
+-다른 리소스 그룹
+
+/*---------------------------------------------------------------------------------------------------*/
+
+Key Vault (main.bicep)
+  -Private dns zone (.\modules\privateDnsZone_vaultcore.bicep)
+    Needs: subscriptionId, resourceGroupId, virtualNetworkId
+  -Private endpoint (.\modules\privateEndpoint.bicep)
+    Needs: resourceGroupId, subnetId
+  -Virtual network link (.\modules\virtualNetworkLink.bicep)
+    Need: privateDnsZoneId *(고려 사항)
+    Can't use parent resource cause there're another subscription
+
+Private dns zone이 다른 구독에 존재하므로, 그에 대한 대응이 필요하다.
