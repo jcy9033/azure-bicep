@@ -1,9 +1,6 @@
 @description('Key Vault의 이름')
 param resourceName string
 
-@description('Key Vault Private link의 이름')
-param keyVaultPlName string = 'kv-pl'
-
 @description('Resource Group의 지역')
 param location string = resourceGroup().location
 
@@ -12,6 +9,9 @@ param virtualNetworkName string
 
 @description('Key Vault의 리소스 ID')
 param keyVaultId string
+
+@description('Private Endpoint의 IP주소')
+param privateIpAddress string
 
 /*------------------------------------------------------------------------------------------------------------*/
 
@@ -26,13 +26,13 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
         properties: {
           groupId: 'vault'
           memberName: 'default'
-          privateIPAddress: '10.0.0.10'
+          privateIPAddress: privateIpAddress
         }
       }
     ]
     privateLinkServiceConnections: [
       {
-        name: keyVaultPlName
+        name: '${resourceName}-pep'
         properties: {
           privateLinkServiceId: keyVaultId
           groupIds: [

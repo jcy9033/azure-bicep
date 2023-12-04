@@ -1,0 +1,2 @@
+#. Create a Azure Key Vault only
+az deployment group create --resource-group chanpu-networks --template-file .\main.bicep
