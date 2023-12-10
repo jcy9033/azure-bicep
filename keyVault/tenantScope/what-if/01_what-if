@@ -1,0 +1,125 @@
+PS C:\Users\cchi9\OneDrive\Vscode\azure-bicep\keyVault> az deployment tenant what-if --name '20231210_Package_Deploy' --location 'japaneast' --template-file .\tenantScope\main.bicep
+Note: The result may contain false positive predictions (noise).
+You can help us improve the accuracy of the result by opening an issue here: https://aka.ms/WhatIfIssues
+
+Resource and property changes are indicated with these symbols:
+  + Create
+  = Nochange
+  * Ignore
+
+The deployment will update the following scopes
+
+Scope: /subscriptions/0b5f5005-c30c-4a28-89c1-9457d0cd5e0f
+
+  * resourceGroups/chanpu-application [2022-09-01]
+  * resourceGroups/chanpu-networks [2022-09-01]
+
+Scope: /subscriptions/0b5f5005-c30c-4a28-89c1-9457d0cd5e0f/resourceGroups/chanpu-application
+
+  + Microsoft.KeyVault/vaults/kv-20231210T024536Z [2023-07-01]
+
+      apiVersion:                              "2023-07-01"
+      id:                                      "/subscriptions/0b5f5005-c30c-4a28-89c1-9457d0cd5e0f/resourceGroups/chanpu-application/providers/Microsoft.KeyVault/vaults/kv-20231210T024536Z"
+      location:                                "japaneast"
+      name:                                    "kv-20231210T024536Z"
+      properties.accessPolicies: [
+        0:
+
+          objectId:     "0b5f5005-c30c-4a28-89c1-9457d0cd5e0f"
+          permissions.certificates: [
+            0: "all"
+          ]
+          permissions.keys: [
+            0: "get"
+            1: "list"
+            2: "update"
+            3: "create"
+            4: "import"
+            5: "delete"
+            6: "recover"
+            7: "backup"
+            8: "restore"
+          ]
+          permissions.secrets: [
+            0: "all"
+          ]
+          tenantId:     "4a77eb19-8d3f-485c-8972-fa6b1e5d974a"
+
+      ]
+      properties.enabledForDeployment:         true
+      properties.enabledForDiskEncryption:     true
+      properties.enabledForTemplateDeployment: true
+      properties.publicNetworkAccess:          "disabled"
+      properties.sku.family:                   "A"
+      properties.sku.name:                     "standard"
+      properties.tenantId:                     "4a77eb19-8d3f-485c-8972-fa6b1e5d974a"
+      type:                                    "Microsoft.KeyVault/vaults"
+
+  * Microsoft.KeyVault/vaults/kv-20231209T101942Z
+  * Microsoft.KeyVault/vaults/kv-20231209T104510Z
+
+Scope: /subscriptions/0b5f5005-c30c-4a28-89c1-9457d0cd5e0f/resourceGroups/chanpu-networks
+
+  + Microsoft.Network/privateEndpoints/kv-20231210T024536Z-pep [2022-01-01]
+
+      apiVersion:           "2022-01-01"
+      id:                   "/subscriptions/0b5f5005-c30c-4a28-89c1-9457d0cd5e0f/resourceGroups/chanpu-networks/providers/Microsoft.Network/privateEndpoints/kv-20231210T024536Z-pep"
+      location:             "japaneast"
+      name:                 "kv-20231210T024536Z-pep"
+      properties.ipConfigurations: [
+        0:
+
+          name:                        "ipconfig1"
+          properties.groupId:          "vault"
+          properties.memberName:       "default"
+          properties.privateIPAddress: "10.0.0.10"
+
+      ]
+      properties.privateLinkServiceConnections: [
+        0:
+
+          name:                            "kv-20231210T024536Z-pep-nic"
+          properties.groupIds: [
+            0: "vault"
+          ]
+          properties.privateLinkServiceId: "/subscriptions/0b5f5005-c30c-4a28-89c1-9457d0cd5e0f/resourceGroups/chanpu-application/providers/Microsoft.KeyVault/vaults/kv-20231210T024536Z"
+
+      ]
+      properties.subnet.id: "/subscriptions/0b5f5005-c30c-4a28-89c1-9457d0cd5e0f/resourceGroups/chanpu-networks/providers/Microsoft.Network/virtualNetworks/vnet-20231209T101152Z/subnets/Subnet-1"
+      type:                 "Microsoft.Network/privateEndpoints"
+
+  + Microsoft.Network/privateEndpoints/kv-20231210T024536Z-pep/privateDnsZoneGroups/vault-PrivateDnsZoneGroup [2023-05-01]
+
+      apiVersion:  "2023-05-01"
+      id:          "/subscriptions/0b5f5005-c30c-4a28-89c1-9457d0cd5e0f/resourceGroups/chanpu-networks/providers/Microsoft.Network/privateEndpoints/kv-20231210T024536Z-pep/privateDnsZoneGroups/vault-PrivateDnsZoneGroup"
+      name:        "vault-PrivateDnsZoneGroup"
+      properties.privateDnsZoneConfigs: [
+        0:
+
+          name:                        "privatelink.vaultcore.azure.net"
+          properties.privateDnsZoneId: "/subscriptions/611a7ed8-17fa-480a-901d-d7084803c376/resourceGroups/core-networks/providers/Microsoft.Network/privateDnsZones/privatelink.vaultcore.azure.net"
+
+      ]
+      type:        "Microsoft.Network/privateEndpoints/privateDnsZoneGroups"
+
+  * Microsoft.Network/networkInterfaces/kv-20231209T101942Z-pep.nic.d5baa3e6-dcc6-4d5f-ae41-9629b9d4f76c
+  * Microsoft.Network/privateEndpoints/kv-20231209T101942Z-pep
+  * Microsoft.Network/virtualNetworks/vnet-20231209T101152Z
+
+Scope: /subscriptions/611a7ed8-17fa-480a-901d-d7084803c376
+
+  * resourceGroups/core-networks [2022-09-01]
+
+Scope: /subscriptions/611a7ed8-17fa-480a-901d-d7084803c376/resourceGroups/core-networks
+
+  + Microsoft.Network/privateDnsZones/privatelink.vaultcore.azure.net/virtualNetworkLinks/vnet-20231209T101152Z [2020-06-01]
+
+      apiVersion:                     "2020-06-01"
+      id:                             "/subscriptions/611a7ed8-17fa-480a-901d-d7084803c376/resourceGroups/core-networks/providers/Microsoft.Network/privateDnsZones/privatelink.vaultcore.azure.net/virtualNetworkLinks/vnet-20231209T101152Z"
+      location:                       "global"
+      name:                           "vnet-20231209T101152Z"
+      properties.registrationEnabled: false
+      properties.virtualNetwork.id:   "0e9dfbe9-d492-4067-a90d-fff72c6a59ad"
+      type:                           "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+
+  = Microsoft.Network/privateDnsZones/privatelink.vaultcore.azure.net [2020-06-01]

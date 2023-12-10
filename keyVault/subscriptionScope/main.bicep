@@ -1,35 +1,3 @@
-/*
-
-Tip. 구독으로 범위 지정
-
-targetScope = 'tenant'
-
-param subscriptionID string
-
-@description('create resources at subscription level')
-module  'module.bicep' = {
-  name: 'deployToSub'
-  scope: subscription(subscriptionID)
-}
-
-Tip. 리소스 그룹으로 범위 지정
-
-targetScope = 'tenant'
-
-param resourceGroupName string
-param subscriptionID string
-
-@description('create resources at resource group level')
-module  'module.bicep' = {
-  name: 'deployToRG'
-  scope: resourceGroup(subscriptionID, resourceGroupName)
-}
-
-
-*/
-
-/*------------------------------------------------------------------------------------------------------------*/
-
 targetScope = 'subscription'
 
 /*------------------------------------------------------------------------------------------------------------*/
@@ -42,10 +10,10 @@ param resourceName string = 'kv-${utcValue}'
 param securityGroupId string = 'cfa4eb1d-5a01-445a-84ad-1f198ebab44c'
 
 @description('Name of virtual network')
-param virtualNetworkName string
+param virtualNetworkName string = ''
 
 @description('Private IP Address')
-param privateIpAddress string
+param privateIpAddress string = ''
 
 /*------------------------------------------------------------------------------------------------------------*/
 

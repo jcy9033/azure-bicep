@@ -17,7 +17,7 @@ param utcValue string = utcNow()
 var keyVaultName = 'kv-${utcValue}'
 
 @description('Private DNS Zone의 이름')
-var privateDnsZoneName = 'privatelink.vaultcore.azure.net'
+param privateDnsZoneName string = 'privatelink.vaultcore.azure.net'
 
 /*------------------------------------------------------------------------------------------------------------*/
 @description('Azure Key Vault')

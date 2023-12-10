@@ -57,6 +57,8 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
 }
 
 /*------------------------------------------------------------------------------------------------------------*/
-
-output id string = keyVault.id
+@description('main.bicep에서 사용할 Key Vault의 이름')
 output name string = keyVault.name
+
+@description('main.bicep에서 사용할 Key Vault의 ID')
+output id string = keyVault.id
