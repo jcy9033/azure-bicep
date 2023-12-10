@@ -15,7 +15,7 @@ param utcValue string = utcNow()
 param keyVaultName string = 'kv-${utcValue}'
 
 @description('Object id of security group')
-param securityGroupId string = '0b5f5005-c30c-4a28-89c1-9457d0cd5e0f' /* 환경에 맞춰 값을 변경 */
+param securityGroupId string = 'cfa4eb1d-5a01-445a-84ad-1f198ebab44c' /* 환경에 맞춰 값을 변경 */
 
 @description('Name of virtual network')
 param virtualNetworkName string = 'vnet-20231209T101152Z' /* 환경에 맞춰 값을 변경 */
