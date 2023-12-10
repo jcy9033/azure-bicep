@@ -5,8 +5,19 @@ targetScope = 'tenant'
 @description('Subscription ID of Core')
 param core_subscriptionId string = '611a7ed8-17fa-480a-901d-d7084803c376'
 
+@description('Name of core networks resource group')
+param core_resourceGroup_networks string = 'core-networks'
+
 @description('Subscription ID of Systems')
 param system_subscriptionId string = '0b5f5005-c30c-4a28-89c1-9457d0cd5e0f' /* 환경에 맞춰 값을 변경 */
+
+@description('Name of networks resource group')
+param system_resourceGroup_networks string = 'chanpu-networks'
+
+@description('Name of applications resource group')
+param system_resourceGroup_application string = 'chanpu-app'
+
+/*------------------------------------------------------------------------------------------------------------*/
 
 @description('UTC value for key vault name')
 param utcValue string = utcNow()
@@ -28,15 +39,6 @@ param location string = 'japaneast'
 
 @description('Name of private dns zone')
 param privateDnsZoneName string = 'privatelink.vaultcore.azure.net'
-
-@description('Name of applications resource group')
-param system_resourceGroup_application string = 'chanpu-application'
-
-@description('Name of networks resource group')
-param system_resourceGroup_networks string = 'chanpu-networks'
-
-@description('Name of core networks resource group')
-param core_resourceGroup_networks string = 'core-networks'
 
 /*------------------------------------------------------------------------------------------------------------*/
 
