@@ -1,5 +1,14 @@
-@description('Key Vault의 이름')
-param keyVaultName string
+@description('Storage Account의 이름')
+param storageAccountName string
+
+@description('Storage Account의 서브 리소스')
+@allowed([
+  'blob'
+  'file'
+  'queue'
+  'table'
+])
+param storageAccount_subResource string
 
 @description('Resource Group의 지역')
 param location string = resourceGroup().location
@@ -11,7 +20,7 @@ param virtualNetworkName string
 param subnetName string
 
 @description('Key Vault의 리소스 ID')
-param keyVaultId string
+param storageAccountId string
 
 @description('Private Endpoint의 IP주소')
 param privateIpAddress string
@@ -26,14 +35,14 @@ param privateDnsZoneId string
 
 @description('Private Endpoint생성 및 Key Vault와 링크 생성')
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
-  name: '${keyVaultName}-pep'
+  name: '${storageAccountName}-${storageAccount_subResource}-pep'
   location: location
   properties: {
     ipConfigurations: [
       {
         name: 'ipconfig1'
         properties: {
-          groupId: 'vault'
+          groupId: 'blob'
           memberName: 'default'
           privateIPAddress: privateIpAddress
         }
@@ -41,11 +50,11 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
     ]
     privateLinkServiceConnections: [
       {
-        name: '${keyVaultName}-pep-nic'
+        name: '${storageAccountName}-${storageAccount_subResource}-pep-nic'
         properties: {
-          privateLinkServiceId: keyVaultId
+          privateLinkServiceId: storageAccountId
           groupIds: [
-            'vault'
+            'blob'
           ]
         }
       }
@@ -59,7 +68,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
 @description('Private Endpoint와 Private DNS Zone의 링크 생성')
 resource privateEndpointDns 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-05-01' = {
   parent: privateEndpoint
-  name: 'vault-PrivateDnsZoneGroup'
+  name: '${storageAccount_subResource}-PrivateDnsZoneGroup'
   properties: {
     privateDnsZoneConfigs: [
       {

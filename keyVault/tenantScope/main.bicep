@@ -12,10 +12,10 @@ param core_resourceGroup_networks string = 'core-networks'
 param system_subscriptionId string = '0b5f5005-c30c-4a28-89c1-9457d0cd5e0f' /* 환경에 맞춰 값을 변경 */
 
 @description('Name of networks resource group')
-param system_resourceGroup_networks string = 'chanpu-networks'
+param system_resourceGroup_networks string = 'system-networks'
 
 @description('Name of applications resource group')
-param system_resourceGroup_application string = 'chanpu-app'
+param system_resourceGroup_application string = 'system-applications'
 
 /*------------------------------------------------------------------------------------------------------------*/
 
@@ -30,6 +30,9 @@ param securityGroupId string = 'cfa4eb1d-5a01-445a-84ad-1f198ebab44c' /* 환경�
 
 @description('Name of virtual network')
 param virtualNetworkName string = 'vnet-20231209T101152Z' /* 환경에 맞춰 값을 변경 */
+
+@description('Name of Subnet')
+param subnetName string = 'subnet-1' /* 환경에 맞춰 값을 변경 */
 
 @description('Private ip address')
 param privateIpAddress string = '10.0.0.20' /* 환경에 맞춰 값을 변경 */
@@ -71,6 +74,7 @@ module privateEndpoint 'modules/privateEndpoint.Bicep' = {
     keyVaultId: keyVault.outputs.id
     keyVaultName: keyVault.outputs.name
     virtualNetworkName: virtualNetwork.outputs.name
+    subnetName: subnetName
     privateIpAddress: privateIpAddress /* Output 사용 불가 */
     privateDnsZoneName: privateDnsZone.outputs.name
     privateDnsZoneId: privateDnsZone.outputs.id

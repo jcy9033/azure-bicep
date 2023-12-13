@@ -19,21 +19,81 @@ param system_resourceGroup_application string = 'chanpu-app'
 
 /*------------------------------------------------------------------------------------------------------------*/
 
-@description('utcValue 값을 생성')
+@description('utcValue')
 param utcValue string = utcNow()
 
-@description('utcValue 값을 모두 소문자로 변경')
+@description('Change utcValue with lowerCase')
 param lowerCaseUtcValue string = toLower(utcValue)
 
-@description('Storage Account의 이름')
+@description('Name of storage account')
 param storageAccountName string = 'st${lowerCaseUtcValue}'
+
+@description('Sub resource of storage account')
+param sub_resource string = 'blob'
+
+@description('Name of virtual network')
+param virtualNetworkName string = 'vnet-20231209T101152Z' /* 환경에 맞춰 값을 변경 */
+
+@description('Name of subnet')
+param subnetName string = 'subnet-1' /* 환경에 맞춰 값을 변경 */
+
+@description('Private ip address')
+param privateIpAddress string = '10.0.0.30' /* 환경에 맞춰 값을 변경 */
+
+@description('Location of resource groups and resources')
+param location string = 'japaneast'
+
+@description('Name of private dns zone')
+param privateDnsZoneName string = 'privatelink.vaultcore.azure.net'
+
+@description('Tag values of storage account')
+param tags object = {}
 
 /*------------------------------------------------------------------------------------------------------------*/
 
-module storageAccount 'mouldes/storageAccount.bicep' = {
+module storageAccount 'modules/storageAccount.bicep' = {
   scope: resourceGroup(system_subscriptionId, system_resourceGroup_application)
   name: 'storageAccount.bicep'
   params: {
     storageAccountName: storageAccountName
+    location: location
+    tags: tags
+  }
+}
+
+@description('Module of virtual network')
+module virtualNetwork 'modules/virtualNetwork.bicep' = {
+  scope: resourceGroup(system_subscriptionId, system_resourceGroup_networks)
+  name: 'virtualNetwork.bicep'
+  params: {
+    virtualNetworkName: virtualNetworkName /* Output 사용 불가 */
+  }
+}
+
+@description('Module of private endpoint for key vault')
+module privateEndpoint 'modules/privateEndpoint.Bicep' = {
+  scope: resourceGroup(system_subscriptionId, system_resourceGroup_networks)
+  name: 'privateEndpoint.bicep'
+  params: {
+    location: location
+    privateDnsZoneId: privateDnsZone.outputs.id
+    privateDnsZoneName: privateDnsZone.outputs.name
+    privateIpAddress: privateIpAddress
+    sub_resource: sub_resource
+    storageAccountId: storageAccount.outputs.id
+    storageAccountName: storageAccount.outputs.name
+    subnetName: subnetName
+    virtualNetworkName: virtualNetwork.outputs.name
+  }
+}
+
+@description('Module of private dns zone(privatelink.vaultcore.azure.net)')
+module privateDnsZone 'modules/privateDnsZone.Bicep' = {
+  scope: resourceGroup(core_subscriptionId, core_resourceGroup_networks)
+  name: 'privateDnsZone.bicep'
+  params: {
+    privateDnsZoneName: privateDnsZoneName /* Output 사용 불가 */
+    virtualNetworkId: virtualNetwork.outputs.id
+    virtualNetworkLinkName: virtualNetwork.outputs.name
   }
 }
