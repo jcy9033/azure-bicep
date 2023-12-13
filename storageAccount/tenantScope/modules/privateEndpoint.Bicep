@@ -8,7 +8,7 @@ param storageAccountName string
   'queue'
   'table'
 ])
-param storageAccount_subResource string
+param sub_resource string
 
 @description('Resource Group의 지역')
 param location string = resourceGroup().location
@@ -35,14 +35,14 @@ param privateDnsZoneId string
 
 @description('Private Endpoint생성 및 Key Vault와 링크 생성')
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
-  name: '${storageAccountName}-${storageAccount_subResource}-pep'
+  name: '${storageAccountName}-${sub_resource}-pep'
   location: location
   properties: {
     ipConfigurations: [
       {
         name: 'ipconfig1'
         properties: {
-          groupId: 'blob'
+          groupId: sub_resource
           memberName: 'default'
           privateIPAddress: privateIpAddress
         }
@@ -50,11 +50,11 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
     ]
     privateLinkServiceConnections: [
       {
-        name: '${storageAccountName}-${storageAccount_subResource}-pep-nic'
+        name: '${storageAccountName}-${sub_resource}-pep-nic'
         properties: {
           privateLinkServiceId: storageAccountId
           groupIds: [
-            'blob'
+            sub_resource
           ]
         }
       }
@@ -68,7 +68,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
 @description('Private Endpoint와 Private DNS Zone의 링크 생성')
 resource privateEndpointDns 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-05-01' = {
   parent: privateEndpoint
-  name: '${storageAccount_subResource}-PrivateDnsZoneGroup'
+  name: '${sub_resource}-PrivateDnsZoneGroup'
   properties: {
     privateDnsZoneConfigs: [
       {
