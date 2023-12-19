@@ -61,7 +61,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
     supportsHttpsTrafficOnly: true
     sasPolicy: {
       expirationAction: 'Log'
-      sasExpirationPeriod: 
+      sasExpirationPeriod: ''
     }
   }
 }
