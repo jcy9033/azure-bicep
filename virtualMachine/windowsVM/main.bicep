@@ -46,10 +46,15 @@ param vmSize string = 'Standard_B1ms'
 param location string = resourceGroup().location
 
 @description('Evironment Code of virtual machine')
-param env_code string = 'DEV'
+@allowed([
+  'dev'
+  'verify'
+  'prod'
+])
+param envCode string = 'dev'
 
 @description('System number of virtual machine')
-param systemNumber string = '001'
+param vmNum int = 1
 
 @description('Operation system of virtual machine')
 @allowed([
@@ -59,10 +64,10 @@ param systemNumber string = '001'
 param osType string = 'Windows'
 
 @description('Operation system code of virtual machine')
-param osCode string = osType == 'Windows' ? 'WIN' : 'LINUX'
+param osCode string = osType == 'Windows' ? 'win' : 'linux'
 
 @description('Name of virtual machine')
-param vmName string = 'AZR${env_code}SRV${osCode}${systemNumber}'
+param vmName string = '${osCode}-${vmNum}-${envCode}'
 
 @description('Security Type of the Virtual Machine.')
 @allowed([
